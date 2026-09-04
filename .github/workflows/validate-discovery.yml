@@ -1,0 +1,42 @@
+name: Validate discovery document
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".agents/discovery.json"
+      - "schemas/discovery.schema.json"
+      - "scripts/validate-discovery.mjs"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/validate-discovery.yml"
+  pull_request:
+    paths:
+      - ".agents/discovery.json"
+      - "schemas/discovery.schema.json"
+      - "scripts/validate-discovery.mjs"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/validate-discovery.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Validate discovery document against schema
+        run: npm run validate

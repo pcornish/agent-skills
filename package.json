@@ -1,0 +1,13 @@
+{
+  "name": "@govuk-one-login/agent-skills",
+  "private": true,
+  "description": "Discovery document and shared agent skills for GOV.UK One Login.",
+  "scripts": {
+    "validate": "node scripts/validate-discovery.mjs",
+    "serve": "bash scripts/serve.sh"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1"
+  }
+}

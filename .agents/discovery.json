@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "sources": [
+    {
+      "name": "agent-skills",
+      "type": "git",
+      "url": "https://github.com/govuk-one-login/agent-skills.git",
+      "status": "official"
+    },
+    {
+      "name": "gds-ai-superpowers",
+      "type": "git",
+      "url": "https://github.com/govuk-one-login/gds-ai-superpowers.git",
+      "status": "official"
+    },
+    {
+      "name": "dependabot-pr-review",
+      "type": "git",
+      "url": "https://github.com/govuk-one-login/ai-sandbox.git",
+      "status": "official"
+    },
+    {
+      "name": "frontend-skills",
+      "type": "git",
+      "url": "https://github.com/govuk-one-login/frontend-skills.git",
+      "status": "official"
+    }
+  ]
+}

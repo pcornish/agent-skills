@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentmanager.dev/schemas/discovery/v1.json",
+  "title": "Agent Manager Discovery Document",
+  "description": "Discovery document for agent-manager. Consumed as a git remote from .agents/discovery.json at the repository root.",
+  "type": "object",
+  "required": ["version", "sources"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1",
+      "description": "Schema version"
+    },
+    "api": {
+      "type": "object",
+      "description": "Authenticated backend API configuration. Omit if no API is available.",
+      "required": ["baseUrl"],
+      "properties": {
+        "baseUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Base URL of the authenticated REST API (e.g. https://api.example.com). Can be overridden by API_BASE_URL."
+        }
+      },
+      "additionalProperties": false
+    },
+    "projects": {
+      "type": "object",
+      "description": "Projects feature. Omit or set enabled false to hide My Projects.",
+      "required": ["enabled"],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "When true, enable My Projects (requires auth and a resolved API base URL)."
+        },
+        "exclusiveSource": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true, Search & Install and headless installs are limited to skills/agents permitted by the caller's project memberships."
+        }
+      },
+      "additionalProperties": false
+    },
+    "auth": {
+      "type": "object",
+      "description": "Authentication configuration. Omit entirely if no authentication is required.",
+      "required": ["required"],
+      "properties": {
+        "required": {
+          "type": "boolean",
+          "description": "Whether authentication is needed to access skills from this endpoint"
+        },
+        "oidcDiscoveryUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the standard OIDC discovery document (e.g. https://auth.example.com/.well-known/openid-configuration)"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "OAuth2 client ID that agent-manager should use"
+        },
+        "scopes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["openid"],
+          "description": "OAuth2 scopes to request. Defaults to [\"openid\"] if omitted."
+        }
+      },
+      "if": {
+        "properties": {
+          "required": { "const": true }
+        }
+      },
+      "then": {
+        "required": ["required", "oidcDiscoveryUrl", "clientId"]
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "description": "Telemetry configuration. Omit entirely to leave telemetry unconfigured (env vars still apply).",
+      "required": ["url", "siteId"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Base URL of the telemetry endpoint (e.g. https://telemetry.example.com)"
+        },
+        "siteId": {
+          "type": "string",
+          "description": "Site identifier for the telemetry service"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "description": "List of available sources",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "url"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Stable logical source name, unique within this document (kebab-case recommended). Identifies the source everywhere, independently of where its content is hosted."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["http", "git", "artefact"],
+            "description": "How to fetch the source. 'http' reads a versioned bundle stream from a content root. 'git' clones a repository in Claude Code plugin marketplace format. 'artefact' downloads a packaged skill zip."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Content root for http (the directory owning index.json), repository URL for git, or direct zip URL for artefact"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["official", "verified", "community"],
+            "description": "Trust level indicator"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
