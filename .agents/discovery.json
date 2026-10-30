@@ -4,7 +4,7 @@
     {
       "name": "agent-skills",
       "type": "git",
-      "url": "https://github.com/govuk-one-login/agent-skills.git",
+      "url": "https://github.com/pcornish/agent-skills.git",
       "status": "official"
     },
     {
