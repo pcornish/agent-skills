@@ -77,21 +77,7 @@ marketplace layout (`skills/<skill-name>/SKILL.md` at the repository root).
 |--------|------------|-------|
 | `agent-skills` | [govuk-one-login/agent-skills](https://github.com/govuk-one-login/agent-skills) | This repository. Skills under `skills/`. |
 | `gds-ai-superpowers` | [govuk-one-login/gds-ai-superpowers](https://github.com/govuk-one-login/gds-ai-superpowers) | Skills under `skills/` in the marketplace layout. |
-| `dependabot-pr-review` | [govuk-one-login/ai-sandbox](https://github.com/govuk-one-login/ai-sandbox) | See caveat below. |
-| `frontend-skills` | [govuk-one-login/frontend-skills](https://github.com/govuk-one-login/frontend-skills) | Repository to be created (URL is a placeholder). |
-
-### Caveats
-
-- **`dependabot-pr-review`** currently lives at `.kiro/skills/dependabot-pr-review/SKILL.md`
-  in the `ai-sandbox` repository, **not** under a top-level `skills/` directory. Agent
-  Manager's `git` source scanner only discovers skills in the marketplace layout
-  (`skills/<skill-name>/SKILL.md`), so this skill will not be found until it is moved (or
-  copied) to `skills/dependabot-pr-review/` in a repository, or repackaged as an
-  `artefact` source. Update the source entry in
-  [`.agents/discovery.json`](.agents/discovery.json) once its
-  final location is known.
-- **`frontend-skills`** does not exist yet. The `url` in the discovery document is a
-  placeholder — update it when the repository is created.
+| `frontend-skills` | [govuk-one-login/frontend-skills](https://github.com/govuk-one-login/frontend-skills) | Skills under `skills/` in the marketplace layout. |
 
 ## Adding a skill to this repository
 
